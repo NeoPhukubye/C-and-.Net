@@ -1,4 +1,5 @@
-﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+﻿@* Scaffolding template that generates a Create view for the selected entity. *@
+@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
 @using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
 @using System.Collections.Generic
 @using System.Linq
@@ -38,6 +39,7 @@
     @:
     //    PushIndent("    ");
 }
+@* Heading shown above the generated create form. *@
 @:<h4>@Model.ViewDataTypeShortName</h4>
 @:<hr />
 @:<div class="row">
@@ -112,6 +114,7 @@
                 }
             }
 }
+@* Submit button for the generated create form. *@
 <div class="form-group">
     <input type="submit" value="Create" class="k-button k-button-md k-rounded-md k-button-solid-primary" />
 </div>

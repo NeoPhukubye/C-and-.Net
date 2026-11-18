@@ -1,9 +1,11 @@
-﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+﻿@* Scaffolding template that generates a read-only Details view for the selected entity. *@
+@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
 @using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
 @using System.Collections.Generic
 @using System.Linq
+@* Bind the generated view to the selected entity type. *@
 @@model @Model.ViewDataTypeName
-b4
+
 @{
     if (Model.IsPartialView)
     {
@@ -39,6 +41,7 @@ b4
         //    PushIndent("    ");
     }
 }
+@* Show every scaffolded property and navigation in a definition list. *@
 <div>
     <h4>@Model.ViewDataTypeShortName</h4>
     <hr />

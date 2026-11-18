@@ -1,4 +1,5 @@
-﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+﻿@* Scaffolding template that generates a Delete confirmation view for the selected entity. *@
+@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
 @using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
 @using System.Collections.Generic
 @using System.Linq
@@ -39,6 +40,7 @@
         //    PushIndent("    ");
     }
 }
+@* Ask the user to confirm the delete before showing the record values. *@
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>@Model.ViewDataTypeShortName</h4>
@@ -73,6 +75,7 @@
     @:</dl>
     @:
     @:<form asp-action="@Model.ViewName">
+        // Only the primary key is posted back; the server deletes by id.
         foreach (var property in Model.ModelMetadata.Properties)
         {
             if(property.IsPrimaryKey){

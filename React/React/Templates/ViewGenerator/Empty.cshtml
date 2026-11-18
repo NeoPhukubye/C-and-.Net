@@ -1,9 +1,11 @@
-﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+﻿@* Scaffolding template that generates an empty view for the selected entity. *@
+@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
 @using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
 @using System.Collections.Generic
 @using System.Linq
 
 @{
+    // Partial views only emit a comment reminding developers where the MVC docs live.
     if (Model.IsPartialView)
     {
 @:@@*
