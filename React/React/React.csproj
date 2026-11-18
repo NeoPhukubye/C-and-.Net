@@ -1,21 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
+﻿<!-- Web SDK for the legacy MVC host that also serves Kendo UI views. -->
+<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
 <PropertyGroup>
+    <!-- Target .NET 9 because the Kendo packages are built for this runtime. -->
     <TargetFramework>net9.0</TargetFramework>
+    <!-- Keep nullable checks relaxed for the older MVC code. -->
     <Nullable>disable</Nullable>
+    <!-- Import common namespaces automatically. -->
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Newtonsoft JSON support for MVC controllers. -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.*" />
+    <!-- JSON Patch support for partial updates. -->
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.*" />
+    <!-- Kendo UI helpers used by the Razor views. -->
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2026.4.1111" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <!-- Add a RELEASE symbol so code can branch on the build configuration. -->
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Scaffolding templates are tooling input only; keep them out of the build. -->
     <Compile Remove="Templates\**" />
     <Content Remove="Templates\**" />
     <EmbeddedResource Remove="Templates\**" />
