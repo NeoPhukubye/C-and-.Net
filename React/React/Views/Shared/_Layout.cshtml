@@ -1,35 +1,51 @@
-﻿<!DOCTYPE html>
+﻿@* Shared layout used by every MVC view in this project. *@
+<!DOCTYPE html>
 <html>
 <head>
+    <!-- Send UTF-8 so accented characters render correctly. -->
     <meta charset="utf-8" />
+    <!-- Make the page responsive on small screens. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy that only allows the CDNs used below. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' https://code.jquery.com/ https://cdn.jsdelivr.net https://unpkg.com 'nonce-Telerik-Examples'; style-src 'self' https://unpkg.com https://cdn.jsdelivr.net; font-src 'self' https://unpkg.com; connect-src ws: http: 'self';" />
 
+    <!-- Page title combines the view title with the application name. -->
     <title>@ViewData["Title"] - BlankCoreApp</title>
 
+    <!-- Load the local Bootstrap stylesheet while developing. -->
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     </environment>
+    <!-- Load Bootstrap from the CDN in staging and production. -->
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
     </environment>
     @*Core Content Start*@
 
+    <!-- Kendo UI Fluent theme used by the widgets. -->
     <link href="https://cdn.jsdelivr.net/npm/@@progress/kendo-theme-fluent@14.6.1/dist/fluent-main.css" rel="stylesheet" type="text/css" />
+    <!-- jQuery is required by Kendo UI. -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- JSZip enables client-side Excel export. -->
     <script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+    <!-- Kendo UI widgets. -->
     <script src="https://cdn.jsdelivr.net/npm/@@progress/kendo-ui@2026.3.1015/umd/kendo.all.min.js"></script>
+    <!-- Kendo ASP.NET MVC helpers. -->
     <script src="https://cdn.jsdelivr.net/npm/@@progress/kendo-ui@2026.3.1015/umd/kendo.aspnetmvc.min.js"></script>
     @*Core Content End*@
 </head>
 <body>
+    <!-- Each view renders its own markup here. -->
     @RenderBody()
 
+    <!-- Render the deferred Kendo initialisation scripts collected during the request. -->
     @(Html.Kendo().DeferredScriptFile())
 
+    <!-- Load the local Bootstrap script while developing. -->
     <environment names="Development">
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
+    <!-- Load the Bootstrap bundle from the CDN in other environments. -->
     <environment names="Staging,Production">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     </environment>

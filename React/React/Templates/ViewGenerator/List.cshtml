@@ -1,15 +1,20 @@
-﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+﻿@* Scaffolding template that generates the Index/List view for an entity. *@
+@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
 @using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
 @using System.Collections.Generic
 @using System.Linq
+@* The generated view is strongly typed to a list of the selected entity. *@
 @@model @GetEnumerableTypeExpression(Model.ViewDataTypeName)
 
 @{
+    // Emit the page header block, or a full HTML document for standalone views.
     if (Model.IsPartialView)
     {
+        // Partial views need no layout or header markup.
     }
     else if (Model.IsLayoutPageSelected)
     {
+        // Use the selected layout page and set the page title.
 @:@@{
     @:ViewData["Title"] = "@Model.ViewName";
         if (!string.IsNullOrEmpty(Model.LayoutPageFile))
@@ -23,6 +28,7 @@
     }
     else
     {
+        // Generate a complete HTML document when no layout is used.
 @:@@{
     @:Layout = null;
 @:}
@@ -35,7 +41,6 @@
     @:<title>@Model.ViewName</title>
 @:</head>
 @:<body>
-        //    PushIndent("    ");
     }
 @:<p>
     @:<a asp-action="Create" class="k-button k-button-md k-rounded-md k-button-solid">Create New</a>
@@ -43,9 +48,11 @@
 @:<table class="table">
     @:<thead>
         @:<tr>
+        // Map metadata by name so properties can be looked up quickly.
         Dictionary<string, IPropertyMetadata> propertyLookup = ((IModelMetadata)Model.ModelMetadata).Properties.ToDictionary(x => x.PropertyName, x => x);
         Dictionary<string, INavigationMetadata> navigationLookup = ((IModelMetadata)Model.ModelMetadata).Navigations.ToDictionary(x => x.AssociationPropertyName, x => x);
 
+        // Emit one header cell per scaffolded property or navigation.
         foreach (var item in Model.ModelMetadata.ModelType.GetProperties())
         {
             if (propertyLookup.TryGetValue(item.Name, out IPropertyMetadata property)
@@ -62,12 +69,14 @@
             </th>
             }
         }
+            // Column reserved for the row action links.
             @:<th></th>
         @:</tr>
     @:</thead>
     @:<tbody>
 @:@@foreach (var item in Model) {
         @:<tr>
+        // Emit a cell for each scaffolded property or navigation.
         foreach (var item in Model.ModelMetadata.ModelType.GetProperties())
         {
             if (propertyLookup.TryGetValue(item.Name, out IPropertyMetadata property)
@@ -84,6 +93,7 @@
             </td>
             }
         }
+        // Add Edit, Details and Delete links when a single primary key exists.
         string pkName = GetPrimaryKeyName();
         if (pkName != null)
         {
@@ -95,6 +105,7 @@
         }
         else
         {
+            // Fall back to action links without a route value.
             <td>
                 @@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
@@ -106,15 +117,16 @@
     @:</tbody>
 
 @:</table>
+    // Close the document only when this is not a partial or layout-based view.
     if(!Model.IsPartialView && !Model.IsLayoutPageSelected)
     {
-        //ClearIndent();
 @:</body>
 @:</html>
     }
 }
 @functions
 {
+    // Return the single primary key name, or null when the entity has none.
     string GetPrimaryKeyName()
     {
         return (Model.ModelMetadata.PrimaryKeys != null && Model.ModelMetadata.PrimaryKeys.Length == 1)
@@ -122,16 +134,19 @@
         : null;
     }
 
+    // Render a property access expression for the generated view.
     string GetValueExpression(IPropertyMetadata property)
     {
         return property.PropertyName;
     }
 
+    // Render a navigation access expression for the generated view.
     string GetValueExpression(INavigationMetadata navigation)
     {
         return navigation.AssociationPropertyName;
     }
 
+    // Wrap the entity name in IEnumerable for the @model directive.
     string GetEnumerableTypeExpression(string typeName)
     {
         return "IEnumerable<" + typeName + ">";
