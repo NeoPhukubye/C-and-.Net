@@ -3,35 +3,51 @@ using WebApplication1.models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
 
-// Register DonationDBContext with SQL Server Express
-builder.Services.AddDbContext<DonationDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+var connectionString = builder.Configuration.GetConnectionString("DevConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Connection string 'DevConnection' is missing. Configure it in appsettings.json or user secrets.");
+}
 
-// Enable CORS for React frontend requests
+builder.Services.AddDbContext<DonationDBContext>(options => options.UseSqlServer(connectionString));
+
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
+    {
+        if (allowedOrigins.Length == 0)
+        {
+            policy.AllowAnyOrigin();
+        }
+        else
+        {
+            policy.WithOrigins(allowedOrigins);
+        }
+
+        policy.AllowAnyMethod().AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+else
+{
+    app.UseExceptionHandler();
+    app.UseHsts();
+}
 
 app.UseCors("AllowReact");
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

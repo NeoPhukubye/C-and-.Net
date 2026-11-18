@@ -1,6 +1,38 @@
 @WebApplication1_HostAddress = http://localhost:5159
 
-GET {{WebApplication1_HostAddress}}/weatherforecast/
+### List all candidates
+GET {{WebApplication1_HostAddress}}/api/DCandidate
 Accept: application/json
 
-###
+### Get a single candidate
+GET {{WebApplication1_HostAddress}}/api/DCandidate/1
+Accept: application/json
+
+### Create a candidate
+POST {{WebApplication1_HostAddress}}/api/DCandidate
+Content-Type: application/json
+
+{
+  "fullName": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "age": 28,
+  "bloodGroup": "O+",
+  "mobile": "0821234567",
+  "address": "12 Long Street, Cape Town"
+}
+
+### Update a candidate
+PUT {{WebApplication1_HostAddress}}/api/DCandidate/1
+Content-Type: application/json
+
+{
+  "fullName": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "age": 29,
+  "bloodGroup": "O+",
+  "mobile": "0821234567",
+  "address": "12 Long Street, Cape Town"
+}
+
+### Delete a candidate
+DELETE {{WebApplication1_HostAddress}}/api/DCandidate/1
