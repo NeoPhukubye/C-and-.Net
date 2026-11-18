@@ -1,14 +1,15 @@
+# Base address of the WebApplication1 development server.
 @WebApplication1_HostAddress = http://localhost:5159
 
-### List all candidates
+# List every candidate, sorted by name by the API.
 GET {{WebApplication1_HostAddress}}/api/DCandidate
 Accept: application/json
 
-### Get a single candidate
+# Read a single candidate by id.
 GET {{WebApplication1_HostAddress}}/api/DCandidate/1
 Accept: application/json
 
-### Create a candidate
+# Create a candidate; the API validates every field before saving.
 POST {{WebApplication1_HostAddress}}/api/DCandidate
 Content-Type: application/json
 
@@ -21,7 +22,7 @@ Content-Type: application/json
   "address": "12 Long Street, Cape Town"
 }
 
-### Update a candidate
+# Update the candidate with id 1; the route id wins over the body id.
 PUT {{WebApplication1_HostAddress}}/api/DCandidate/1
 Content-Type: application/json
 
@@ -34,5 +35,5 @@ Content-Type: application/json
   "address": "12 Long Street, Cape Town"
 }
 
-### Delete a candidate
+# Delete the candidate with id 1.
 DELETE {{WebApplication1_HostAddress}}/api/DCandidate/1
