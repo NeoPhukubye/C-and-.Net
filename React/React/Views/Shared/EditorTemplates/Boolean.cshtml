@@ -1,3 +1,5 @@
+@* Editor template for nullable boolean values. *@
 @model bool?
 
+@* Render a Kendo checkbox and use the full field name as its tooltip. *@
 @(Html.Kendo().CheckBoxFor(m => m).HtmlAttributes(new { title = Html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName("")}))
