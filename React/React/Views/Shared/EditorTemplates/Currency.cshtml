@@ -1,8 +1,11 @@
+@* Editor template for nullable currency amounts. *@
 @model decimal?
 
-@(Html.Kendo().CurrencyTextBoxFor(m => m)
-      .HtmlAttributes(new { style = "width:100%", title = Html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName("")})
-      .Min(0)
+@(
+    // Render a Kendo currency text box with currency formatting.
+    Html.Kendo().CurrencyTextBoxFor(m => m)
+        // Fill the container and expose the field name as a tooltip.
+        .HtmlAttributes(new { style = "width:100%", title = Html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName("")})
+        // Amounts below zero are not valid.
+        .Min(0)
 )
-
-
