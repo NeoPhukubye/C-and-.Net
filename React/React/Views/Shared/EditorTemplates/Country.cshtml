@@ -1,10 +1,19 @@
+@* Editor template for country strings backed by a shared lookup list. *@
 @model string
 
-@(Html.Kendo().DropDownListFor(m => m)
-            .DataValueField("CountryNameShort")
-            .DataTextField("CountryNameLong")
-            .HtmlAttributes(new { data_bind = "value: Country" })
-            .Template(@"<div class='dropdown-country-wrap'><img src='" + @Url.Content("~/content/web/country-flags/#:data.CountryNameShort#.png") + "' alt='#: data.CountryNameLong#' title='#: data.CountryNameLong#' width='20' /><span>#: data.CountryNameLong #</span></div>")
-            .BindTo((System.Collections.IEnumerable)ViewData["countries"])
-            .AutoWidth(true)
+@(
+    // Render a Kendo drop-down list for the country field.
+    Html.Kendo().DropDownListFor(m => m)
+        // Value stored in the model is the short country code.
+        .DataValueField("CountryNameShort")
+        // Text shown to the user is the long country name.
+        .DataTextField("CountryNameLong")
+        // Expose a Knockout binding name for client-side MVVM scenarios.
+        .HtmlAttributes(new { data_bind = "value: Country" })
+        // Show a flag image next to each country name.
+        .Template(@"<div class='dropdown-country-wrap'><img src='" + @Url.Content("~/content/web/country-flags/#:data.CountryNameShort#.png") + "' alt='#: data.CountryNameLong#' title='#: data.CountryNameLong#' width='20' /><span>#: data.CountryNameLong #</span></div>")
+        // Populate the list from the countries view data supplied by the controller.
+        .BindTo((System.Collections.IEnumerable)ViewData["countries"])
+        // Let the popup grow as wide as its longest item.
+        .AutoWidth(true)
 )
