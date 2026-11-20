@@ -29,6 +29,11 @@
     <Content Remove="Templates\**" />
     <EmbeddedResource Remove="Templates\**" />
     <None Remove="Templates\**" />
+    <!-- WebApplication1 is a separate project, so its files must not be compiled twice. -->
+    <Compile Remove="WebApplication1\**" />
+    <Content Remove="WebApplication1\**" />
+    <EmbeddedResource Remove="WebApplication1\**" />
+    <None Remove="WebApplication1\**" />
   </ItemGroup>
 
 </Project>
